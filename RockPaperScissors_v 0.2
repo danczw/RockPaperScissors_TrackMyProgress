@@ -1,0 +1,71 @@
+from random import choice
+
+#list of game options
+rps = ['rock','paper','scissors']
+#AI win combinations [user,ai]
+ai_win = [['rock','paper'],['paper','scissors'],['scissors','rock']]
+#list of input option for restarting/terminating game
+play_again_y = ['y','Y','yes','Yes']
+play_again_n = ['n','N','no','No']
+
+print('Hi, welcome to a game of rock-paper-sciccors.\nThis is a first to three versus a fearless AI!')
+
+while True:
+
+        score_you = 0
+        score_ai = 0
+
+        while score_you < 3 and score_ai <3:
+
+                #player to select rock, paper or scissor, validate and print selection
+                user_rps = input('\nPlease select:\nr for ROCK - p for PAPER - s for SCISSORS\n')
+                while user_rps not in ['r','p','s']: #checking wether the input is legit
+                        print('! Incorrect input - try again !')
+                        user_rps = input('\nPlease select:\n1 for ROCK - 2 for PAPER - 3 for SCISSORS\n')
+                if user_rps == 'r':
+                        print('\nYou chose ROCK')
+                        user_rps = 'rock'
+                elif user_rps == 'p':
+                        print('\nYou chose PAPER')
+                        user_rps = 'paper'
+                else:
+                        print('\nYou chose SCISSORS')
+                        user_rps = 'scissors'
+
+                #AI to randomly select rock, paper or scissor, selection is printed		
+                ai_rps = choice(rps)
+                print(f'The fearless AI chose {ai_rps.upper()}')
+                user_ai_rps =[user_rps,ai_rps]
+
+                #check both selections and add point for winner, return to selection (while below 3 points)
+                if user_rps == ai_rps:
+                        print(f'> It\'s a DRAW!\n>>> Score: <<<\nyou {score_you} : {score_ai} AI')
+                        print('-' * 15)
+                elif user_ai_rps in ai_win:
+                        score_ai = score_ai + 1
+                        print(f'> The AI WON!\n>>> New Score: <<<\nyou {score_you} : {score_ai} AI\n')
+                        print('-' * 15)
+                else:
+                        score_you = score_you + 1
+                        print(f'> You WON!\n>>> New Score: <<<\nyou {score_you} : {score_ai} AI\n')
+                        print('-' * 15)
+
+        #final score confirmation after first to win 3 rounds		
+        print('\n' + '#' * 15)
+        print(f'\nGame finished - the final score:\nyou {score_you} : {score_ai} AI')
+        if score_ai == 3:
+                print('\nThe AI won.\nRobots are inferior!')
+        else:
+                print('\nYou won.\nThe Robots had mercy.')
+        print('\n' + '#' * 15 + '\n')
+
+        #ask to play again and restart program or terminate
+        yn = input('Would you dare to challenge the AI again? [Y]es or [N]o\n')
+        if yn in play_again_y:
+                print('\nrestarting game...\n...\n...')
+        elif yn in play_again_n:
+                print('Goodbye!')
+                break
+        else:
+                print('You are mumbeling - Goodbye!')
+                break
